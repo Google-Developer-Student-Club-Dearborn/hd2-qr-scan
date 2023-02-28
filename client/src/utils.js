@@ -1,5 +1,5 @@
 export async function sendHttpRequest(method, url, expectData, body) {
-    let res = await fetch(`http://${process.env.REACT_APP_SERVER_HOST}:${process.env.REACT_APP_SERVER_PORT}${url}`, {
+    let res = await fetch(`${process.env.REACT_APP_SERVER_URL}${url}`, {
         method, 
         headers: {
             'Content-Type': 'application/json',
