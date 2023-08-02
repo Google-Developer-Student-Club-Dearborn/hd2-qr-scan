@@ -17,6 +17,8 @@ const credentials = {
     "universe_domain": process.env.SA_UNIVERSE_DOMAIN,
 }
 
+console.log(credentials)
+
 // Authorize and initialize the API client
 const auth = new google.auth.GoogleAuth({
     credentials: credentials,
