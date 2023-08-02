@@ -17,8 +17,6 @@ const credentials = {
     "universe_domain": process.env.SA_UNIVERSE_DOMAIN,
 }
 
-console.log(credentials)
-
 // Authorize and initialize the API client
 const auth = new google.auth.GoogleAuth({
     credentials: credentials,
@@ -28,7 +26,7 @@ const auth = new google.auth.GoogleAuth({
 const sheets = google.sheets({ version: 'v4', auth });
 const range = "A:ZZ"
 
-const registrants = {}
+const registrants = []
 
 async function main(){
     try {
@@ -49,7 +47,7 @@ async function main(){
             for(let k of Object.keys(headers)) {
                 obj[k] = row[headers[k]]
             }
-            registrants[obj.token] = obj
+            registrants.push(obj)
         }
     } catch (err) {
         // TODO (developer) - Handle exception
