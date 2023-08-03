@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "api": "nodemon .",
-    "client": "cd client && npm start",
+    "client": "cd client && HTTPS=true npm start",
     "dev": "concurrently \"nodemon .\" \"npm run client\""
   },
   "author": "",
