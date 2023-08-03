@@ -15,7 +15,7 @@ const App = () => {
 
   const [scannedData, setScannedData] = useState(null);
   const [result, setResult] = useState(null)
-  const [resultOpened, setResultOpened] = useState(false)
+  const [resultOpened, setResultOpened] = useState(true)
   const [loading, setLoading] = useState(false)
 
   const handleScan = () => {
@@ -125,37 +125,44 @@ const App = () => {
       </div>}
 
       {resultOpened && <div className={style.resultPage}>
-        <Typography sx={{p: 2}} variant="h5">Scanned data: {scannedData}</Typography>
+        {
+          loading
+            ? <Typography sx={{ p: 2 }} variant="h5">Loading: {scannedData}</Typography>
+            : <React.Fragment>
+              <Typography sx={{ p: 2 }} variant="h5">Scanned data: {scannedData}</Typography>
 
-        <Card sx={{ p: 2, minWidth: 275 }}>
-          <Typography>Name: {result?.first_name} {result?.last_name}</Typography>
-          <Typography>Phone Number: {result?.phone_number}</Typography>
-          <Typography>Token: {result?.token}</Typography>
-        </Card>
+              <Card sx={{ p: 2, minWidth: 275 }}>
+                <Typography>Name: {result?.first_name} {result?.last_name}</Typography>
+                <Typography>Phone Number: {result?.phone_number}</Typography>
+                <Typography>Token: {result?.token}</Typography>
+              </Card>
 
-        <Button
-          variant="contained"
-          onClick={() => {
-            setResultOpened(false)
-          }}>
-            done
-          </Button>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  setResultOpened(false)
+                }}>
+                done
+              </Button>
 
-        <Button
-          variant="contained"
-          onClick={() => {
-            attendRegistrant()
-          }}>
-            attend
-          </Button>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  attendRegistrant()
+                }}>
+                attend
+              </Button>
 
-        <Button
-          variant="contained"
-          onClick={() => {
-            raffleAttendee()
-          }}>
-            raffle
-          </Button>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  raffleAttendee()
+                }}>
+                raffle
+              </Button>
+            </React.Fragment>
+        }
+
       </div>}
 
     </div>

@@ -7,7 +7,7 @@
     "server": "nodemon .",
     "dev": "concurrently \"npm run server\" \"cd client && npm start\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku": "cd client && npm run build && cd .. && node .",
+    "heroku": "node .",
     "postinstall": "cd client && npm install"
   },
   "author": "",
