@@ -122,6 +122,8 @@ const App = () => {
             playsInline
           />
         </div>
+
+        <button style={{position: "absolute", bottom: 30, right: 30 }} onClick={() => {setScannedData("+12488707620"); openResult("+12488707620")}}>mock scan +12488707620</button>
       </div>}
 
       {resultOpened && <div className={style.resultPage}>
