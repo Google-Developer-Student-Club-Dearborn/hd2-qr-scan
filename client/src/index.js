@@ -15,7 +15,7 @@ const App = () => {
 
   const [scannedData, setScannedData] = useState(null);
   const [result, setResult] = useState(null)
-  const [resultOpened, setResultOpened] = useState(true)
+  const [resultOpened, setResultOpened] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const handleScan = () => {
