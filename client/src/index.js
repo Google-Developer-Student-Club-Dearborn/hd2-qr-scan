@@ -3,25 +3,26 @@ import ReactDOM from 'react-dom/client';
 import { BrowserMultiFormatReader } from "@zxing/library";
 import { useEffect } from 'react';
 import { sendHttpRequest } from './utils';
+import Button from '@mui/material/Button';
 
-import "./style.css"
+import "./global.css"
+import style from "./style.module.css"
+import { Card, Typography } from '@mui/material';
 
 const App = () => {
   const videoRef = useRef(null);
   const codeReader = new BrowserMultiFormatReader();
-  const [scannedData, setScannedData] = useState("+1248870620");
 
+  const [scannedData, setScannedData] = useState(null);
   const [result, setResult] = useState(null)
   const [resultOpened, setResultOpened] = useState(false)
-  const [resultLoading, setResultLoading] = useState(false)
-
+  const [loading, setLoading] = useState(false)
 
   const handleScan = () => {
-    console.log("handling scan")
     codeReader.decodeFromVideo("video")
       .then(result => {
-        setResultOpened(true)
         setScannedData(result.text);
+        openResult()
       })
       .catch(err => {
         console.error("Error scanning barcode:", err);
@@ -44,56 +45,119 @@ const App = () => {
       });
   }
 
+  const openResult = () => {
+    setResultOpened(true)
+    setLoading(true)
+    setResult(null)
+    sendHttpRequest('GET', `/api/registrant?phone_number=${encodeURIComponent(scannedData)}`, true)
+      .then(res => {
+        if (res.error) {
+          alert(`Error getting data: ${scannedData}`)
+          setResultOpened(false)
+          setResult(null)
+          setScannedData(null)
+          console.error(res.error)
+        } else {
+          setResult(res.data)
+        }
+      })
+      .catch(err => {
+        console.error(err)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+
+  const attendRegistrant = () => {
+    sendHttpRequest('POST', `/api/attend?phone_number=${encodeURIComponent(scannedData)}`, true)
+      .then(res => {
+        if (res.error) {
+          console.error(res.error)
+        } else {
+          // setResult(res.data)
+          console.log(res.data)
+        }
+      })
+      .catch(err => {
+        console.error(err)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+
+  const raffleAttendee = () => {
+    sendHttpRequest('POST', `/api/raffle?phone_number=${encodeURIComponent(scannedData)}`, true)
+      .then(res => {
+        if (res.error) {
+          console.error(res.error)
+        } else {
+          // setResult(res.data)
+          console.log(res.data)
+        }
+      })
+      .catch(err => {
+        console.error(err)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+
   // Start the video stream and scan for barcodes when the component mounts
+  // useEffect(() => openResult(), [])
   React.useEffect(() => {
-    // getUserMedia()
-  });
+    getUserMedia()
+  },);
 
   return (
-    <div>
-      <video
-        ref={videoRef}
-        id="video"
-        autoPlay
-        playsInline
-        style={{ width: "300px", maxWidth: "300px" }}
-      />
-
-      {!resultOpened && <button onClick={() => {
-        setResultOpened(true)
-        sendHttpRequest('GET', `/api/registrant?phone_number=${encodeURIComponent(scannedData)}`, true)
-          .then(res => {
-            if (res.error) {
-              console.error(res.error)
-            } else {
-              setResult(res.data)
-            }
-          })
-          .catch(err => {
-            console.error(err)
-          })
-          .finally(() => {
-            setResultLoading(false)
-          })
-      }}>open</button>}
-
-      {resultOpened && <div>
-        
-        {resultLoading && <>loading result: {scannedData}</>}
-
-        {!resultLoading && <pre>{JSON.stringify(result)}</pre>}
-
-        {!resultLoading && <button onClick={() => {
-          setResultOpened(false)
-        }}>close</button>}
-
-        {!resultLoading && <button onClick={() => {
-        }}>attend</button>}
-
-        {!resultLoading && <button onClick={() => {
-
-        }}>raffle</button>}
+    <div className={style.appContainer}>
+      {!resultOpened && <div className={style.scanPage}>
+        <div className={style.cameraContainer}>
+          <video
+            ref={videoRef}
+            id="video"
+            autoPlay
+            playsInline
+          />
+        </div>
       </div>}
+
+      {resultOpened && <div className={style.resultPage}>
+        <Typography sx={{p: 2}} variant="h5">Scanned data: {scannedData}</Typography>
+
+        <Card sx={{ p: 2, minWidth: 275 }}>
+          <Typography>Name: {result?.first_name} {result?.last_name}</Typography>
+          <Typography>Phone Number: {result?.phone_number}</Typography>
+          <Typography>Token: {result?.token}</Typography>
+        </Card>
+
+        <Button
+          variant="contained"
+          onClick={() => {
+            setResultOpened(false)
+          }}>
+            done
+          </Button>
+
+        <Button
+          variant="contained"
+          onClick={() => {
+            attendRegistrant()
+          }}>
+            attend
+          </Button>
+
+        <Button
+          variant="contained"
+          onClick={() => {
+            raffleAttendee()
+          }}>
+            raffle
+          </Button>
+      </div>}
+
     </div>
   );
 };
