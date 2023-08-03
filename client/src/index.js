@@ -22,7 +22,7 @@ const App = () => {
     codeReader.decodeFromVideo("video")
       .then(result => {
         setScannedData(result.text);
-        openResult()
+        openResult(result.text)
       })
       .catch(err => {
         console.error("Error scanning barcode:", err);
@@ -45,14 +45,14 @@ const App = () => {
       });
   }
 
-  const openResult = () => {
+  const openResult = (text) => {
     setResultOpened(true)
     setLoading(true)
     setResult(null)
-    sendHttpRequest('GET', `/api/registrant?phone_number=${encodeURIComponent(scannedData)}`, true)
+    sendHttpRequest('GET', `/api/registrant?phone_number=${encodeURIComponent(text)}`, true)
       .then(res => {
         if (res.error) {
-          alert(`Error getting data: ${scannedData}`)
+          alert(`Error getting data: ${text}`)
           setResultOpened(false)
           setResult(null)
           setScannedData(null)
