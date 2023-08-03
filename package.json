@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
-  "scripts": {},
+  "scripts": {
+    "api": "nodemon .",
+    "client": "cd client && npm start",
+    "dev": "concurrently \"nodemon .\" \"npm run client\""
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
