@@ -52,10 +52,10 @@ const App = () => {
     sendHttpRequest('GET', `/api/registrant?phone_number=${encodeURIComponent(text)}`, true)
       .then(res => {
         if (res.error) {
-          alert(`Error getting data: ${text}`)
           setResultOpened(false)
           setResult(null)
           setScannedData(null)
+          alert(`Error getting data: ${text}`)
           console.error(res.error)
         } else {
           setResult(res.data)
@@ -70,12 +70,15 @@ const App = () => {
   }
 
   const attendRegistrant = () => {
+    setLoading(true)
     sendHttpRequest('POST', `/api/attend?phone_number=${encodeURIComponent(scannedData)}`, true)
       .then(res => {
         if (res.error) {
+          alert("Error attending registrant")
           console.error(res.error)
         } else {
           // setResult(res.data)
+          alert("Registrant attended successfully")
           console.log(res.data)
         }
       })
@@ -84,16 +87,19 @@ const App = () => {
       })
       .finally(() => {
         setLoading(false)
+        setResultOpened(false)
       })
   }
 
   const raffleAttendee = () => {
+    setLoading(true)
     sendHttpRequest('POST', `/api/raffle?phone_number=${encodeURIComponent(scannedData)}`, true)
       .then(res => {
         if (res.error) {
           console.error(res.error)
         } else {
           // setResult(res.data)
+          alert("Attended raffled successfully")
           console.log(res.data)
         }
       })
@@ -102,13 +108,14 @@ const App = () => {
       })
       .finally(() => {
         setLoading(false)
+        setResultOpened(false)
       })
   }
 
   // Start the video stream and scan for barcodes when the component mounts
   // useEffect(() => openResult(), [])
   React.useEffect(() => {
-    getUserMedia()
+    if(!resultOpened) getUserMedia()
   },);
 
   return (
