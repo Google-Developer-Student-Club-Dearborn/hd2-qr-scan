@@ -1,49 +1,21 @@
 import React, { useRef, useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserQRCodeReader } from "@zxing/browser";
-import { useEffect } from 'react';
 import { sendHttpRequest } from './utils';
 import Button from '@mui/material/Button';
+
+// To use Html5Qrcode (more info below)
 
 import "./global.css"
 import style from "./style.module.css"
 import { Card, Typography } from '@mui/material';
+import Html5QrcodePlugin from './Html5QrcodePlugin';
 
 const App = () => {
-  const videoRef = useRef(null);
-  var codeReader = new BrowserQRCodeReader();
 
   const [scannedData, setScannedData] = useState(null);
   const [result, setResult] = useState(null)
   const [resultOpened, setResultOpened] = useState(false)
   const [loading, setLoading] = useState(false)
-
-  const handleScan = () => {
-    codeReader.decodeOnceFromVideoElement("video")
-      .then(result => {
-        setScannedData(result.text);
-        openResult(result.text)
-      })
-      .catch(err => {
-        console.error("Error scanning barcode:", err);
-      });
-  };
-
-  const getUserMedia = () => {
-    const constraints = {
-      video: { facingMode: "environment" }, // Use rear camera (if available) for better barcode scanning in mobile devices
-      // audio: false,
-    };
-
-    navigator.mediaDevices.getUserMedia(constraints)
-      .then(stream => {
-        videoRef.current.srcObject = stream;
-        handleScan();
-      })
-      .catch(err => {
-        console.error("Error accessing camera:", err);
-      });
-  }
 
   const openResult = (text) => {
     setResultOpened(true)
@@ -112,26 +84,20 @@ const App = () => {
       })
   }
 
-  // Start the video stream and scan for barcodes when the component mounts
-  // useEffect(() => openResult(), [])
-  React.useEffect(() => {
-    codeReader = new BrowserQRCodeReader()
-    if(!resultOpened) getUserMedia()
-  },);
-
-  console.log("rebuild")
-
   return (
     <div className={style.appContainer}>
 
       {
         !resultOpened && <div className={style.scanPage}>
           <div className={style.cameraContainer}>
-            <video
-              ref={videoRef}
-              id="video"
-              autoPlay
-              playsInline
+            <Html5QrcodePlugin
+              fps={10}
+              disableFlip={false}
+              qrCodeSuccessCallback={(decodedText, decodedResult) => {
+                console.log(`Code matched = ${decodedText}`, decodedResult);
+                setScannedData(decodedText)
+                openResult(decodedText)
+              }}
             />
           </div>
 

@@ -29,14 +29,10 @@
 }
 
 .cameraContainer {
-    /* box-sizing: border-box; */
-    /* background-color: black; */
-    background-color: red;
-    max-width: 80%;
+    width: 80%;
 }
 
-.cameraContainer > video {
-    background-color: blue;
+.qrCode {
     width: 100%;
 }
 
