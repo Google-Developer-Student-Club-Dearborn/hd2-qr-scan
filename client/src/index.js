@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserMultiFormatReader } from "@zxing/library";
+import { BrowserQRCodeReader } from "@zxing/browser";
 import { useEffect } from 'react';
 import { sendHttpRequest } from './utils';
 import Button from '@mui/material/Button';
@@ -11,7 +11,7 @@ import { Card, Typography } from '@mui/material';
 
 const App = () => {
   const videoRef = useRef(null);
-  const codeReader = new BrowserMultiFormatReader();
+  var codeReader = new BrowserQRCodeReader();
 
   const [scannedData, setScannedData] = useState(null);
   const [result, setResult] = useState(null)
@@ -19,7 +19,7 @@ const App = () => {
   const [loading, setLoading] = useState(false)
 
   const handleScan = () => {
-    codeReader.decodeFromVideo("video")
+    codeReader.decodeOnceFromVideoElement("video")
       .then(result => {
         setScannedData(result.text);
         openResult(result.text)
@@ -115,8 +115,11 @@ const App = () => {
   // Start the video stream and scan for barcodes when the component mounts
   // useEffect(() => openResult(), [])
   React.useEffect(() => {
+    codeReader = new BrowserQRCodeReader()
     if(!resultOpened) getUserMedia()
   },);
+
+  console.log("rebuild")
 
   return (
     <div className={style.appContainer}>
