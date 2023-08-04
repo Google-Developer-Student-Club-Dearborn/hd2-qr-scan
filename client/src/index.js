@@ -113,59 +113,64 @@ const App = () => {
 
   return (
     <div className={style.appContainer}>
-      {!resultOpened && <div className={style.scanPage}>
-        <div className={style.cameraContainer}>
-          <video
-            ref={videoRef}
-            id="video"
-            autoPlay
-            playsInline
-          />
+
+      {
+        !resultOpened && <div className={style.scanPage}>
+          <div className={style.cameraContainer}>
+            <video
+              ref={videoRef}
+              id="video"
+              autoPlay
+              playsInline
+            />
+          </div>
+
+          <button style={{ position: "absolute", bottom: 30, right: 30 }} onClick={() => { setScannedData("+12488707620"); openResult("+12488707620") }}>mock scan +12488707620</button>
         </div>
+      }
 
-        <button style={{position: "absolute", bottom: 30, right: 30 }} onClick={() => {setScannedData("+12488707620"); openResult("+12488707620")}}>mock scan +12488707620</button>
-      </div>}
+      {
+        resultOpened && <div className={style.resultPage}>
+          {
+            loading
+              ? <Typography sx={{ p: 2 }} variant="h5">Loading: {scannedData}</Typography>
+              : <React.Fragment>
+                <Typography sx={{ p: 2 }} variant="h5">Scanned data: {scannedData}</Typography>
 
-      {resultOpened && <div className={style.resultPage}>
-        {
-          loading
-            ? <Typography sx={{ p: 2 }} variant="h5">Loading: {scannedData}</Typography>
-            : <React.Fragment>
-              <Typography sx={{ p: 2 }} variant="h5">Scanned data: {scannedData}</Typography>
+                <Card sx={{ p: 2, minWidth: 275 }}>
+                  <Typography>Name: {result?.first_name} {result?.last_name}</Typography>
+                  <Typography>Phone Number: {result?.phone_number}</Typography>
+                  <Typography>Token: {result?.token}</Typography>
+                </Card>
 
-              <Card sx={{ p: 2, minWidth: 275 }}>
-                <Typography>Name: {result?.first_name} {result?.last_name}</Typography>
-                <Typography>Phone Number: {result?.phone_number}</Typography>
-                <Typography>Token: {result?.token}</Typography>
-              </Card>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    setResultOpened(false)
+                  }}>
+                  done
+                </Button>
 
-              <Button
-                variant="contained"
-                onClick={() => {
-                  setResultOpened(false)
-                }}>
-                done
-              </Button>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    attendRegistrant()
+                  }}>
+                  attend
+                </Button>
 
-              <Button
-                variant="contained"
-                onClick={() => {
-                  attendRegistrant()
-                }}>
-                attend
-              </Button>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    raffleAttendee()
+                  }}>
+                  raffle
+                </Button>
+              </React.Fragment>
+          }
 
-              <Button
-                variant="contained"
-                onClick={() => {
-                  raffleAttendee()
-                }}>
-                raffle
-              </Button>
-            </React.Fragment>
-        }
-
-      </div>}
+        </div>
+      }
 
     </div>
   );
