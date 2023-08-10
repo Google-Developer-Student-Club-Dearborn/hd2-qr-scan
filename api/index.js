@@ -6,7 +6,7 @@ const express = require('express')
 const cors = require("cors");
 const api = express()
 
-const { getRegistrants } = require('./registrants_sheet.js');
+const { getRegistrants, setRowBackgroundColor } = require('./registrants_sheet.js');
 const { getAttendance, registerAttendance } = require('./attendance_sheet.js');
 const { addRaffle } = require('./raffle_sheet.js');
 
@@ -39,12 +39,10 @@ api.post("/attend", async (req, res) => {
             return
         }
     
-        const attendees = await getAttendance()
-        const attendee = attendees.find(r => r.phone_number && r.phone_number === req.query.phone_number)
+        // const attendees = await getAttendance()
+        // const attendee = attendees.find(r => r.phone_number && r.phone_number === req.query.phone_number)
 
-        if(!attendee) {
-            registerAttendance(registrant)
-        }
+        setRowBackgroundColor(registrant.rowIndex - 1)
     } catch {
         res.status(500).end()
         return

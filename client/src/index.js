@@ -117,6 +117,7 @@ const App = () => {
                   <Typography>Name: {result?.first_name} {result?.last_name}</Typography>
                   <Typography>Phone Number: {result?.phone_number}</Typography>
                   <Typography>Token: {result?.token}</Typography>
+                  <Typography>Attended: {result?.attended ? "Yes" : "No"}</Typography>
                 </Card>
 
                 <Button
@@ -127,13 +128,13 @@ const App = () => {
                   done
                 </Button>
 
-                <Button
+                {!result.attended && <Button
                   variant="contained"
                   onClick={() => {
                     attendRegistrant()
                   }}>
                   attend
-                </Button>
+                </Button>}
 
                 <Button
                   variant="contained"
