@@ -13,11 +13,18 @@ const { addRaffle } = require('./raffle_sheet.js');
 api.use(cors());
 api.use(express.json())
 
+function findPhoneNumber(people, phone_number) {
+    if(!phone_number) return undefined
+    
+    l = phone_number.length
+    return people.find(r => r.phone_number && r.phone_number.slice(l-10, l) === phone_number.slice(l-10, l))
+}
+
 api.get("/registrant", async (req, res) => {
     let result = undefined
     try {
         const registrants = await getRegistrants()
-        result = registrants.find(r => r.phone_number && r.phone_number === req.query.phone_number)
+        result = findPhoneNumber(registrants, req.query.phone_number)
     } catch {
         res.status(500).end()
         return
@@ -33,7 +40,7 @@ api.get("/registrant", async (req, res) => {
 api.post("/attend", async (req, res) => {
     try {
         const registrants = await getRegistrants()
-        let registrant = registrants.find(r => r.phone_number && r.phone_number === req.query.phone_number)
+        let registrant = findPhoneNumber(registrants, req.query.phone_number)
         if (!registrant) {
             res.status(400).end()
             return
@@ -55,7 +62,7 @@ api.post("/attend", async (req, res) => {
 api.post("/raffle", async (req, res) => {
     try {
         const attendees = await getAttendance()
-        let attendee = attendees.find(r => r.phone_number && r.phone_number === req.query.phone_number)
+        let attendee = findPhoneNumber(attendees, req.query.phone_number)
         if (!attendee) {
             res.status(400).end()
             return
