@@ -2,4 +2,42 @@ html, body, #root {
     margin: 0;
     padding: 0;
     height: 100%;
+    font-family: sans-serif;
+}
+
+#html5-qrcode-button-camera-permission, #html5-qrcode-button-camera-stop, #html5-qrcode-button-camera-start {
+    margin-bottom: 20px;
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: 100ms;
+    cursor: pointer;
+}
+
+/* #html5-qrcode-button-camera-permission:hover {
+    background-color: ;
+} */
+
+#html5-qrcode-anchor-scan-type-change, #html5-qrcode-anchor-scan-type-change {
+    /* border: 1px solid black;
+    padding: 20px;
+    height: 20px;
+    line-height: 20px;
+    display: inline-block;
+    text-decoration: none !important;
+    background-color: buttonface;
+    border-color: buttonborder;
+    border-radius: 3px;
+    font-size: 12px;
+    margin-bottom: 10px; */
+    display: none !important;
+}
+
+#html5qr-code-full-region {
+    border: none !important;
 }
