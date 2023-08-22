@@ -5,10 +5,19 @@ html, body, #root {
     font-family: sans-serif;
 }
 
-#html5-qrcode-button-camera-permission, #html5-qrcode-button-camera-stop, #html5-qrcode-button-camera-start {
+#root {
+    background-color: #333;
+    background-image: url("assets/bg.jpg"), linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.6));
+    background-blend-mode: overlay;
+    background-position: center;
+}
+
+#html5-qrcode-button-camera-permission,
+#html5-qrcode-button-camera-stop,
+#html5-qrcode-button-camera-start {
     margin-bottom: 20px;
-    background-color: #1976d2;
-    color: white;
+    background-color: #90caf9;
+    color: #08233A;
     border: none;
     text-transform: uppercase;
     font-weight: bold;
@@ -19,6 +28,11 @@ html, body, #root {
     cursor: pointer;
 }
 
+#html5-qrcode-button-camera-permission:hover,
+#html5-qrcode-button-camera-stop:hover,
+#html5-qrcode-button-camera-start:hover {
+    background-color: #43A5F5;
+}
 /* #html5-qrcode-button-camera-permission:hover {
     background-color: ;
 } */

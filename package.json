@@ -6,6 +6,7 @@
   "scripts": {
     "api": "nodemon .",
     "client": "cd client && npm start",
+    "bc": "cd client && npm run build && cd ..",
     "dev": "concurrently \"nodemon .\" \"npm run client\""
   },
   "author": "",
