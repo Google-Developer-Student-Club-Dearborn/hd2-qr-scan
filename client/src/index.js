@@ -13,6 +13,9 @@ import Html5QrcodePlugin from './Html5QrcodePlugin';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
+import AddToHomescreen from 'react-add-to-homescreen';
+
+
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -92,10 +95,20 @@ const App = () => {
         setResultOpened(false)
       })
   }
+  
+
+  const handleAddToHomescreenClick = () => {
+    alert(`
+      1. Open Share menu
+      2. Tap on "Add to Home Screen" button`
+    );
+  };
 
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
+      <AddToHomescreen onAddToHomescreenClick={handleAddToHomescreenClick} />
+
       <div className={style.appContainer}>
 
         {
