@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 
 import "./global.css"
 import style from "./style.module.css"
-import { Card, Typography } from '@mui/material';
+import { Card, CircularProgress, Typography } from '@mui/material';
 import Html5QrcodePlugin from './Html5QrcodePlugin';
 
 const App = () => {
@@ -107,12 +107,12 @@ const App = () => {
 
       {
         resultOpened && <div className={style.resultPage}>
+          <Typography sx={{ p: 2 }} variant="h5">Scanned data: {scannedData}</Typography>
           {
             loading
-              ? <Typography sx={{ p: 2 }} variant="h5">Loading: {scannedData}</Typography>
+              ?
+              <CircularProgress />
               : <React.Fragment>
-                <Typography sx={{ p: 2 }} variant="h5">Scanned data: {scannedData}</Typography>
-
                 <Card sx={{ p: 2, minWidth: 275 }}>
                   <Typography>Name: {result?.first_name} {result?.last_name}</Typography>
                   <Typography>Phone Number: {result?.phone_number}</Typography>
