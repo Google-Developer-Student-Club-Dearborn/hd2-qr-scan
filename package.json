@@ -6,7 +6,8 @@
   "scripts": {
     "api": "nodemon .",
     "client": "cd client && npm start",
-    "bc": "cd client && npm run build && cd ..",
+    "build-client": "cd client && npm run build && cd ..",
+    "bc": "npm run build-client",
     "dev": "concurrently \"nodemon .\" \"npm run client\""
   },
   "author": "",

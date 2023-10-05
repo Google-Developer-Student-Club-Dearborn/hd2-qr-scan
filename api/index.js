@@ -37,27 +37,27 @@ api.get("/registrant", async (req, res) => {
     }
 })
 
-api.post("/attend", async (req, res) => {
-    try {
-        const registrants = await getRegistrants()
-        let registrant = findPhoneNumber(registrants, req.query.phone_number)
-        if (!registrant) {
-            res.status(400).end()
-            return
-        }
+// api.post("/attend", async (req, res) => {
+//     try {
+//         const registrants = await getRegistrants()
+//         let registrant = findPhoneNumber(registrants, req.query.phone_number)
+//         if (!registrant) {
+//             res.status(400).end()
+//             return
+//         }
     
-        // const attendees = await getAttendance()
-        // const attendee = attendees.find(r => r.phone_number && r.phone_number === req.query.phone_number)
+//         // const attendees = await getAttendance()
+//         // const attendee = attendees.find(r => r.phone_number && r.phone_number === req.query.phone_number)
 
-        setRowBackgroundColor(registrant.rowIndex - 1)
-    } catch {
-        res.status(500).end()
-        return
-    }
+//         setRowBackgroundColor(registrant.rowIndex - 1)
+//     } catch {
+//         res.status(500).end()
+//         return
+//     }
 
-    res.status(200).end()
-    return
-})
+//     res.status(200).end()
+//     return
+// })
 
 api.post("/raffle", async (req, res) => {
     try {

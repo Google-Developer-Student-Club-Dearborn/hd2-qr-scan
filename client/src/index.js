@@ -115,7 +115,7 @@ const App = () => {
               />
             </div>
 
-            <button style={{ position: "absolute", bottom: 30, right: 30 }} onClick={() => { setScannedData("+12488707620"); openResult("+12488707620") }}>mock scan +12488707620</button>
+            <button style={{ position: "absolute", bottom: 30, right: 30 }} onClick={() => { setScannedData("+17342288183"); openResult("+17342288183") }}>mock scan +17342288183</button>
           </div>
         }
 
@@ -131,7 +131,7 @@ const App = () => {
                     <Typography>Name: {result?.first_name} {result?.last_name}</Typography>
                     <Typography>Phone Number: {result?.phone_number}</Typography>
                     <Typography>Token: {result?.token}</Typography>
-                    <Typography>Attended: {result?.attended ? "Yes" : "No"}</Typography>
+                    {/* <Typography>Attended: {result?.attended ? "Yes" : "No"}</Typography> */}
                   </Card>
 
                   <Button
@@ -143,7 +143,7 @@ const App = () => {
                   </Button>
 
                   {<Button
-                    disabled={result.attended}
+                    disabled={result.attended || true}
                     variant="contained"
                     onClick={() => {
                       attendRegistrant()
