@@ -78,15 +78,14 @@ const App = () => {
     sendHttpRequest('POST', `/api/raffle?phone_number=${encodeURIComponent(scannedData)}`, true)
       .then(res => {
         if (res.error) {
-          console.error(res.error)
+          console.error("raffle1:", res.error)
         } else {
           // setResult(res.data)
-          alert("Attended raffled successfully")
-          console.log(res.data)
+          console.log("raffle2:", res.data)
         }
       })
       .catch(err => {
-        console.error(err)
+        console.log("raffle3:", err)
       })
       .finally(() => {
         setLoading(false)
@@ -108,6 +107,9 @@ const App = () => {
                 fps={10}
                 disableFlip={false}
                 qrCodeSuccessCallback={(decodedText, decodedResult) => {
+                  if(!decodedText.startsWith("+1")){
+                    decodedText = "+1" + decodedText
+                  }
                   console.log(`Code matched = ${decodedText}`, decodedResult);
                   setScannedData(decodedText)
                   openResult(decodedText)
@@ -121,7 +123,7 @@ const App = () => {
 
         {
           resultOpened && <div className={style.resultPage}>
-            <Typography sx={{ p: 2 }} variant="h5">Scanned data: {scannedData}</Typography>
+              <Typography sx={{ p: 2 }} variant="h5">Scanned data: {scannedData}</Typography>
             {
               loading
                 ?
@@ -129,7 +131,8 @@ const App = () => {
                 : <React.Fragment>
                   <Card sx={{ p: 2, minWidth: 275 }}>
                     <Typography>Name: {result?.first_name} {result?.last_name}</Typography>
-                    <Typography>Phone Number: {result?.phone_number}</Typography>
+                    <Typography>Email: {result?.email}</Typography>
+                    <Typography>Phone: {result?.phone_number}</Typography>
                     <Typography>Token: {result?.token}</Typography>
                     {/* <Typography>Attended: {result?.attended ? "Yes" : "No"}</Typography> */}
                   </Card>
@@ -143,7 +146,7 @@ const App = () => {
                   </Button>
 
                   {<Button
-                    disabled={result.attended || true}
+                    // disabled={result.attended || true}
                     variant="contained"
                     onClick={() => {
                       attendRegistrant()

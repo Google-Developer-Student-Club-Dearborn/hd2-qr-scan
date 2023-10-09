@@ -31,6 +31,7 @@ module.exports.getRegistrants = async function () {
             first_name: 0,
             last_name: 1,
             phone_number: 4,
+            email: 5,
             token: 37
         }
 
@@ -79,7 +80,7 @@ module.exports.getRegistrants = async function () {
         throw err;
     }
 
-    console.log(registrants.length)
+    console.log("Number of registrants: ",registrants.length)
     return registrants
 }
 

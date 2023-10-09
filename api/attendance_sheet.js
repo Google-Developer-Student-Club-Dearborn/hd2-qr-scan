@@ -14,7 +14,7 @@ module.exports.getAttendance = async function () {
       range,
     });
     const numRows = result.data.values ? result.data.values.length : 0;
-    console.log(`${numRows} rows retrieved.`);
+    console.log(`${numRows} attendees retrieved.`);
     const headers = {
       first_name: 0,
       last_name: 1,
@@ -44,6 +44,7 @@ module.exports.registerAttendance = async function (registrant) {
       registrant.first_name,
       registrant.last_name,
       registrant.phone_number,
+      registrant.email,
       registrant.token,
     ],
   ];
