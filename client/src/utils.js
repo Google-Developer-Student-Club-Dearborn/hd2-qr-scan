@@ -1,5 +1,5 @@
 export async function sendHttpRequest(method, url, expectData, body) {
-    let res = await fetch(`${process.env.REACT_APP_SERVER_URL}${url}`, {
+    let res = await fetch(`${"https://hckdbn-2ac7b515dd17.herokuapp.com"}${url}`, {
         method, 
         headers: {
             'Content-Type': 'application/json',
